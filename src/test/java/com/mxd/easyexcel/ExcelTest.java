@@ -20,7 +20,7 @@ public class ExcelTest {
      * 工作表：一个工作簿中可以有多个工作表 (sheet)
      */
     @Test
-    public void test01() {
+    public void read() {
 
         // 获得一个工作簿对象
         /**
@@ -47,5 +47,10 @@ public class ExcelTest {
         // 获得工作表中的内容
         sheet.doRead();
     }
+
+    /**
+     * 需求：单实体导出
+     * 导出多个学生对象到Excel表格
+     */
 
 }
