@@ -13,4 +13,11 @@ public interface StudentService {
      * @param students
      */
     public void readExcel(List<Student> students);
+
+    /**
+     * 从mongodb中读取所有数据
+     * @return
+     */
+    public List<Student> findDataMongoDb();
+
 }
