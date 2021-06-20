@@ -29,4 +29,15 @@ public class StudentServiceImpl implements StudentService {
         studentDao.insertMongoDb(students);
 
     }
+
+    @Override
+    public List<Student> findDataMongoDb() {
+        List<Student> students = studentDao.findDataMongoDb();
+        System.out.println("从mongodb中读取的数据");
+        for (Student student : students) {
+            System.out.println(student);
+        }
+
+        return students;
+    }
 }
