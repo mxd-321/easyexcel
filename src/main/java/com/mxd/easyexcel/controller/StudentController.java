@@ -6,10 +6,10 @@ import com.alibaba.excel.write.builder.ExcelWriterBuilder;
 import com.alibaba.excel.write.builder.ExcelWriterSheetBuilder;
 import com.mxd.easyexcel.domain.Student;
 import com.mxd.easyexcel.listener.WebStudentListener;
-import com.mxd.easyexcel.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,6 +17,8 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,14 +34,6 @@ public class StudentController {
     @Autowired
     private WebStudentListener studentListener;
 
-    @Autowired
-    private StudentService studentService;
-
-    /**
-     * 上传excel文件，读取后存入mongodb
-     * @param file
-     * @return
-     */
     @GetMapping("/read")
     public String readExcel(MultipartFile file) {
 
@@ -57,11 +51,6 @@ public class StudentController {
         }
     }
 
-    /**
-     * 从mongodb读取，存入excel，并且支持下载
-     * @param response
-     * @throws IOException
-     */
     @GetMapping("/write")
     public void writeExcel(HttpServletResponse response) throws IOException {
         response.setContentType("application/vnd.ms-excel");
@@ -88,10 +77,24 @@ public class StudentController {
         ExcelWriterSheetBuilder sheet = writeWorkBook.sheet();
 
         // 准备数据
-        List<Student> students = studentService.findDataMongoDb();
+        List<Student> students = initData();
 
         // 写
         sheet.doWrite(students);
 
+    }
+
+    private List<Student> initData() {
+        ArrayList<Student> students = new ArrayList<>();
+        Student student = new Student();
+
+        for (int i = 0; i < 10; i++) {
+            student.setName("学生1250" + i);
+            student.setBirthday(new Date());
+            student.setGender("男");
+            students.add(student);
+        }
+
+        return students;
     }
 }

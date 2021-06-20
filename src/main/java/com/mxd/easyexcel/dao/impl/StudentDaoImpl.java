@@ -4,8 +4,6 @@ import com.mxd.easyexcel.dao.StudentDao;
 import com.mxd.easyexcel.domain.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,10 +23,5 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public void insertMongoDb(List<Student> students) {
         mongoTemplate.insert(students,"student");
-    }
-
-    @Override
-    public List<Student> findDataMongoDb() {
-        return mongoTemplate.find(new Query(), Student.class);
     }
 }
